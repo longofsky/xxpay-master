@@ -1,0 +1,43 @@
+server:
+  port: 3000
+
+spring:
+  datasource:
+    #   数据源基本配置
+    username: root
+    password: root123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/xxpaydb
+    #    url: jdbc:mysql://mysql.cbkcsgkrqfq8.us-east-2.rds.amazonaws.com:3306/demo1
+    type: com.alibaba.druid.pool.DruidDataSource
+    #   数据源其他配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    #    filters: stat,wall,log4j
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  profiles:
+     active: prod
+
+  activemq:
+    broker-url: failover:(tcp://127.0.0.1:61616?wireFormat.maxInactivityDuration=0)
+    in-memory: true
+    pool:
+      enabled: true # 如果此处设置为true，需要加activemq-pool依赖包，否则会自动配置失败，报JmsMessagingTemplate注入失败
+
+logging:
+  file: ./log/xxpay-service.log
+
+
+
